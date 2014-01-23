@@ -3,9 +3,7 @@ class Sockshare
 		# go to the mobile view
 		# there are rules to parse the desktop version too, but
 		# this one is more easy.
-		# also, it's more easy to request the mobile page on a
-		# desktop than the desktop version on the mobile.
-		if @url.indexOf('mobile/file') == -1
+		if @url.indexOf('mobile/file') is -1
 			@url = @url.replace '/file/', '/mobile/file/'
 
 		@hoster = @url.split '/mobile/file/'
