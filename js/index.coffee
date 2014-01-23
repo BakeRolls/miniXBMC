@@ -78,6 +78,9 @@ testAddress = ->
 		$('.address input').css 'border-color', 'red'
 
 parseVideoURL = (url, successCallback, errorCallback) ->
+	if url.indexOf('primeshare.tv') >= 0
+		hoster = new Primeshare url
+
 	if url.indexOf('streamcloud.eu') >= 0
 		hoster = new Streamcloud url
 
@@ -87,6 +90,7 @@ parseVideoURL = (url, successCallback, errorCallback) ->
 	hoster.parse (url) ->
 		$('.playurl input[type="text"]').val url
 
+		###
 		callAPI
 			id: 1
 			jsonrpc: '2.0'
@@ -96,6 +100,7 @@ parseVideoURL = (url, successCallback, errorCallback) ->
 			console.log 'okay'
 		, (xhr, errorType, error) ->
 			alert('error ' + error);
+		###
 	, (error) ->
 		alert error
 
