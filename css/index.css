@@ -1,0 +1,14 @@
+* { -webkit-box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: black; display: -webkit-box; -webkit-box-orient: vertical; }
+body, input { color: #ccc; outline: none; font-size: 12pt; font-family: sans-serif; }
+input { padding: 10px; border: 1px solid #ccc; width: 100%; }
+body > div { padding: 10px; }
+input { background: #333; border: 1px solid #333; }
+
+.playurl > * { display: block; }
+.playurl { display: -webkit-box; -webkit-box-orient: horizontal; }
+.playurl > *:nth-child(1) { -webkit-box-flex: 1; }
+.toggle { display: -webkit-box; -webkit-box-orient: vertical; }
+.toggle, .toggle input { -webkit-box-flex: 1; }
+.toggle input { height: 100%; display: block; }

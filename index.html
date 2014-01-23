@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<title>minXBMC</title>
+	</head>
+	<body>
+		<div class="address">
+			<input type="text" name="address" placeholder="http://192.168.0.24:8080/">
+		</div>
+
+		<div class="playurl">
+			<span><input type="text" name="url" value="http://www.putlocker.com/file/8F710090EBBEC83D"></span>
+			<span><input type="button" name="reseturl" value="x"></span>
+			<span><input type="button" name="playurl" value="Get"></span>
+		</div>
+
+		<div>
+			<input type="range" name="volume" min="0" max="100" step="5">
+		</div>
+
+		<div class="toggle">
+			<input type="button" name="toggle" value="Play/Pause">
+		</div>
+
+		<script src="phonegap.js"></script>
+		<script src="js/zepto.min.js"></script>
+		<script src="js/hoster/streamcloud.js"></script>
+		<script src="js/hoster/sockshareDesktop.js"></script>
+		<script src="js/hoster/sockshare.js"></script>
+		<script src="js/index.js"></script>
+	</body>
+</html>
