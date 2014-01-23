@@ -2,9 +2,8 @@ class Streamcloud
 	constructor: (@url) ->
 		@data = @url.split '/'
 
-	parse: (@callback) =>
+	parse: (successCallback, errorCallback) =>
 		$.ajax
-			async: false
 			data: $.param
 				op: 'download1'
 				id: @data[3]
@@ -12,13 +11,12 @@ class Streamcloud
 				fname: @data[4].substr 0, @data[4].length - 5
 			type: 'POST'
 			url: @url
-			error: @fail
+			error: errorCallback
 			success: (data, status, xhr) =>
 				url = data.match /file: "(.*)",/
 
 				if typeof url is 'object' and url isnt null and url.length is 2
-					@callback url[1]
-				else @fail()
+					@file = url[1]
 
-	fail: ->
-		console.log 'failed'
+					successCallback @file
+				else errorCallback 'File not found.'
