@@ -13,13 +13,18 @@ $(document).ready ->
 	$('input[name="playurl"]').on 'click', (event) ->
 		if $('input[name="url"]').val() isnt ''
 			parseVideoURL $('input[name="url"]').val(), (url) ->
+				$('.playurl input[type="text"]').val url
+
 				callAPI
 					id: 1
 					jsonrpc: '2.0'
 					method: 'Player.Open'
 					params: item: file: url
-				, ->
-			, ->
+				, (data, status, xhr) ->
+					$('.debug').text 'Sent video'
+				, (xhr, errorType, error) ->
+					$('.debug').text 'Error: ' + error
+			, (error) -> $('.debug').text 'Error: ' + error
 
 	$('input[name="reseturl"]').on 'click', ->
 		$('input[name="url"]').val ''
@@ -34,9 +39,9 @@ $(document).ready ->
 			method: 'Player.PlayPause'
 			params: playerid: 1
 		, (data, status, xhr) ->
-			console.log 'okay'
+			$('.debug').text 'Toggled'
 		, (xhr, errorType, error) ->
-			alert('error ' + error);
+			$('.debug').text 'Error: ' + error
 
 	$('input[name="volume"]').on 'change', (event) ->
 		callAPI
@@ -45,9 +50,9 @@ $(document).ready ->
 			method: 'Application.SetVolume'
 			params: volume: parseInt $(event.target).val()
 		, (data, status, xhr) ->
-			console.log 'okay'
+			$('.debug').text 'Set Volume'
 		, (xhr, errorType, error) ->
-			alert('error ' + error);
+			$('.debug').text 'Error: ' + error
 
 callAPI = (data, successCallback, errorCallback) ->
 	if typeof data is 'object'
@@ -73,39 +78,22 @@ testAddress = ->
 				id: 'AudioLibrary.GetAlbums'
 				type: 'method'
 	, ->
+		$('.debug').text 'Connected'
 		$('.address input').css 'border-color', 'lightgreen'
 	, ->
+		$('.debug').text 'Could not connect to host'
 		$('.address input').css 'border-color', 'red'
 
 parseVideoURL = (url, successCallback, errorCallback) ->
-	if url.indexOf('primeshare.tv') >= 0
-		hoster = new Primeshare url
+	hoster = new Primeshare url  if url.indexOf('primeshare.tv') >= 0
+	hoster = new Nowvideo url    if url.indexOf('nowvideo.ch') >= 0
+	hoster = new Streamcloud url if url.indexOf('streamcloud.eu') >= 0
+	hoster = new Sockshare url   if url.indexOf('sockshare.com') >= 0 or url.indexOf('putlocker.com') >= 0
 
-	if url.indexOf('nowvideo.ch') >= 0
-		hoster = new Nowvideo url
-
-	if url.indexOf('streamcloud.eu') >= 0
-		hoster = new Streamcloud url
-
-	if url.indexOf('sockshare.com') >= 0 or url.indexOf('putlocker.com') >= 0
-		hoster = new Sockshare url
-
-	hoster.parse (url) ->
-		$('.playurl input[type="text"]').val url
-
-		callAPI
-			id: 1
-			jsonrpc: '2.0'
-			method: 'Player.Open'
-			params: item: file: url
-		, (data, status, xhr) ->
-			console.log 'okay'
-		, (xhr, errorType, error) ->
-			alert 'error ' + error
-	, (error) ->
-		alert error
-
-	if url.match '$https?://'
-		return successCallback url
-
-	errorCallback()
+	if typeof hoster is 'object'
+		hoster.parse (url) ->
+			successCallback url
+		, (error) -> errorCallback error
+	else if url.indexOf('http') is 0
+		successCallback url
+	else errorCallback 'No URL'

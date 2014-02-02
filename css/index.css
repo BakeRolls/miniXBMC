@@ -12,3 +12,4 @@ input { background: #333; border: 1px solid #333; }
 .toggle { display: -webkit-box; -webkit-box-orient: vertical; }
 .toggle, .toggle input { -webkit-box-flex: 1; }
 .toggle input { height: 100%; display: block; }
+.debug { opacity: .75; }

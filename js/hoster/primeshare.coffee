@@ -4,6 +4,8 @@ class Primeshare
 		if @url.indexOf('mobile.primeshare.tv') is -1
 			@url = @url.replace 'primeshare.tv', 'mobile.primeshare.tv'
 
+		console.log @url
+
 	parse: (successCallback, errorCallback) ->
 		$.ajax
 			url: @url
