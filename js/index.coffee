@@ -10,24 +10,15 @@ $(document).ready ->
 
 	testAddress()
 
-	$('input[name="playurl"]').on 'click', (event) ->
-		if $('input[name="url"]').val() isnt ''
-			parseVideoURL $('input[name="url"]').val(), (url) ->
-				$('.playurl input[type="text"]').val url
-
-				callAPI
-					id: 1
-					jsonrpc: '2.0'
-					method: 'Player.Open'
-					params: item: file: url
-				, (data, status, xhr) ->
-					$('.debug').text 'Sent video'
-				, (xhr, errorType, error) ->
-					$('.debug').text 'Error: ' + error
-			, (error) -> $('.debug').text 'Error: ' + error
+	$('input[name="playurl"]').on 'click', playUrl
 
 	$('input[name="reseturl"]').on 'click', ->
 		$('input[name="url"]').val ''
+
+	$('input[name="clipboard"]').on 'click', ->
+		cordova.plugins.clipboard.paste (text) =>
+			$('input[name="url"]').val text
+			playUrl()
 
 	$('input[name="url"]').on 'click', ->
 		this.select()
@@ -53,6 +44,22 @@ $(document).ready ->
 			$('.debug').text 'Set Volume'
 		, (xhr, errorType, error) ->
 			$('.debug').text 'Error: ' + error
+
+playUrl = ->
+	if $('input[name="url"]').val() isnt ''
+		parseVideoURL $('input[name="url"]').val(), (url) ->
+			$('input[name="url"]').val url
+
+			callAPI
+				id: 1
+				jsonrpc: '2.0'
+				method: 'Player.Open'
+				params: item: file: url
+			, (data, status, xhr) ->
+				$('.debug').text 'Sent video'
+			, (xhr, errorType, error) ->
+				$('.debug').text 'Error: ' + error
+		, (error) -> $('.debug').text 'Error: ' + error
 
 callAPI = (data, successCallback, errorCallback) ->
 	if typeof data is 'object'
@@ -85,10 +92,10 @@ testAddress = ->
 		$('.address input').css 'border-color', 'red'
 
 parseVideoURL = (url, successCallback, errorCallback) ->
-	hoster = new Primeshare url  if url.indexOf('primeshare.tv') >= 0
-	hoster = new Nowvideo url    if url.indexOf('nowvideo.ch') >= 0
+	hoster = new Primeshare url  if url.indexOf('primeshare.tv')  >= 0
+	hoster = new Nowvideo url    if url.indexOf('nowvideo.ch')    >= 0
 	hoster = new Streamcloud url if url.indexOf('streamcloud.eu') >= 0
-	hoster = new Sockshare url   if url.indexOf('sockshare.com') >= 0 or url.indexOf('putlocker.com') >= 0
+	hoster = new Sockshare url   if url.indexOf('sockshare.com')  >= 0 or url.indexOf('putlocker.com') >= 0
 
 	if typeof hoster is 'object'
 		hoster.parse (url) ->
