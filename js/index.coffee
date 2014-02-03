@@ -65,7 +65,6 @@ callAPI = (data, successCallback, errorCallback) ->
 	if typeof data is 'object'
 		data = JSON.stringify data
 
-	###
 	$.ajax
 		contentType: 'application/json'
 		data: data
@@ -75,7 +74,6 @@ callAPI = (data, successCallback, errorCallback) ->
 			successCallback data, status, xhr
 		error: (xhr, errorType, error) ->
 			errorCallback xhr, errorType, error
-	###
 
 testAddress = ->
 	callAPI
