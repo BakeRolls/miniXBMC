@@ -65,6 +65,7 @@ callAPI = (data, successCallback, errorCallback) ->
 	if typeof data is 'object'
 		data = JSON.stringify data
 
+	###
 	$.ajax
 		contentType: 'application/json'
 		data: data
@@ -74,6 +75,7 @@ callAPI = (data, successCallback, errorCallback) ->
 			successCallback data, status, xhr
 		error: (xhr, errorType, error) ->
 			errorCallback xhr, errorType, error
+	###
 
 testAddress = ->
 	callAPI
@@ -86,16 +88,17 @@ testAddress = ->
 				type: 'method'
 	, ->
 		$('.debug').text 'Connected'
-		$('.address input').css 'border-color', 'lightgreen'
+		$('input[name="address"]').css 'border-color', 'lightgreen'
 	, ->
 		$('.debug').text 'Could not connect to host'
-		$('.address input').css 'border-color', 'red'
+		$('input[name="address"]').css 'border-color', 'red'
 
 parseVideoURL = (url, successCallback, errorCallback) ->
 	hoster = new Primeshare url  if url.indexOf('primeshare.tv')  >= 0
 	hoster = new Nowvideo url    if url.indexOf('nowvideo.ch')    >= 0
 	hoster = new Streamcloud url if url.indexOf('streamcloud.eu') >= 0
 	hoster = new Sockshare url   if url.indexOf('sockshare.com')  >= 0 or url.indexOf('putlocker.com') >= 0
+	hoster = new SharedSx url    if url.indexOf('shared.sx')      >= 0
 
 	if typeof hoster is 'object'
 		hoster.parse (url) ->

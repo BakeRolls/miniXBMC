@@ -9,13 +9,15 @@
 	</head>
 	<body>
 		<div class="address">
-			<input type="text" name="address" placeholder="http://192.168.0.24:8080/">
+			<input type="text" name="address" placeholder="http://foo.bar:8080/">
 		</div>
 
-		<div class="playurl">
-			<span><input type="text" name="url"></span>
-			<span><input type="button" name="clipboard" value="clip"></span>
-			<!--<span><input type="button" name="reseturl" value="x"></span>-->
+		<div class="url">
+			<span><input type="text" name="url" placeholder="http://foo.bar/video.mp4"></span>
+		</div>
+
+		<div class="get">
+			<span><input type="button" name="clipboard" value="Clipboard"></span>
 			<span><input type="button" name="playurl" value="Get"></span>
 		</div>
 
@@ -23,7 +25,7 @@
 			<input type="range" name="volume" min="0" max="100" step="5">
 		</div>
 
-		<div class="toggle">
+		<div class="play">
 			<input type="button" name="toggle" value="Play/Pause">
 		</div>
 
@@ -36,6 +38,7 @@
 		<script src="js/hoster/streamcloud.js"></script>
 		<script src="js/hoster/sockshareDesktop.js"></script>
 		<script src="js/hoster/sockshare.js"></script>
+		<script src="js/hoster/sharedsx.js"></script>
 		<script src="js/index.js"></script>
 	</body>
 </html>

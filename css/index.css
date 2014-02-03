@@ -2,14 +2,14 @@
 html, body { height: 100%; }
 body { margin: 0; background: black; display: -webkit-box; -webkit-box-orient: vertical; }
 body, input { color: #ccc; outline: none; font-size: 12pt; font-family: sans-serif; }
-input { padding: 10px; border: 1px solid #ccc; width: 100%; }
-body > div { padding: 10px; }
-input { background: #333; border: 1px solid #333; }
+input { background: #333; padding: 10px; border: 1px solid #222; width: 100%; }
+body > div { padding: 10px; display: -webkit-box; -webkit-box-orient: vertical; }
+body > div > span { display: block; }
 
-.playurl > * { display: block; }
-.playurl { display: -webkit-box; -webkit-box-orient: horizontal; }
-.playurl > *:nth-child(1) { -webkit-box-flex: 1; }
-.toggle { display: -webkit-box; -webkit-box-orient: vertical; }
-.toggle, .toggle input { -webkit-box-flex: 1; }
-.toggle input { height: 100%; display: block; }
+.url { padding-bottom: 0; }
+.get { padding-top: 0; -webkit-box-orient: horizontal; }
+.get > span:nth-child(1) input { background: #222; }
+.get > span:nth-child(2) { -webkit-box-flex: 1; }
+.play { -webkit-box-flex: 1; }
+.play > input { height: 100%; display: block; -webkit-box-flex: 1; }
 .debug { opacity: .75; }
